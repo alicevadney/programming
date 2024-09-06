@@ -1,0 +1,34 @@
+# import packages
+import numpy as np
+
+# used sample response for set up variables
+np.random.seed(100) # Set the seed for the random number generator
+rho, sigma_x, sigma_y = -.4, 3, 2
+vcv = np.array([[sigma_x**2, rho*sigma_x*sigma_y],
+                [rho*sigma_x*sigma_y,sigma_y**2]])
+mu = np.array([-1,2])
+sample = np.random.multivariate_normal(mu,vcv,200)
+x = sample[:,0]
+y = sample[:,1]
+
+# part 1
+def mean(x):
+    return np.sum(x) / len(x)
+
+# part 2
+def sd(x):
+    sumsqdiff = np.sum( (x - mean(x)) ** 2 )
+    return np.sqrt(sumsqdiff/(len(x)-1))
+
+# part 3
+def zscore(x):
+    return (x - mean(x)) / sd(x)
+
+# part 4
+def covar(x,y):
+    sumsqdiff = np.sum((x - mean(x)) * (y - mean(y)))
+    return sumsqdiff / (len(x)-1)
+
+# part 5
+def correlation(x,y):
+    return covar(x,y)/(sd(x) * sd(y))
